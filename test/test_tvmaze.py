@@ -1,9 +1,11 @@
 #!/usr/bin/python
- # -*- coding: utf-8 -*-
+# coding=utf-8
+
+"""
+Unit testing for pytvmaze
+"""
 
 import unittest
-import datetime
-import sys
 
 from pytvmaze.tvmaze import *
 
@@ -192,6 +194,7 @@ class ObjectTests(unittest.TestCase):
         self.assertTrue(hasattr(show1, 'episodes'))
         with self.assertRaises(SeasonNotFound):
             show1[999]
+
         with self.assertRaises(EpisodeNotFound):
             show1[1][999]
 
@@ -243,7 +246,7 @@ class ObjectTests(unittest.TestCase):
             self.assertTrue(show10.cast.people[1].name, '黃心娣')
 
         with self.assertRaises(MissingParameters):
-            empty_search = get_show()
+            get_show()
 
     def test_get_show_list(self):
         shows = get_show_list('utopia')
@@ -277,76 +280,76 @@ class ObjectTests(unittest.TestCase):
 class ExceptionsTests(unittest.TestCase):
     def test_BadRequest_exception(self):
         with self.assertRaises(BadRequest):
-            result = get_show(maze_id=13, embed='sdfgsdfgs')
+            get_show(maze_id=13, embed='sdfgsdfgs')
 
     def test_MissingParameters_exception(self):
         with self.assertRaises(MissingParameters):
-            result = get_show()
+            get_show()
 
     def test_ShowNotFound1_exception(self):
         with self.assertRaises(ShowNotFound):
-            result = show_search('sdfgsdfgsdfg4t4w3dfg')
+            show_search('sdfgsdfgsdfg4t4w3dfg')
 
     def test_ShowNotFound2_exception(self):
         with self.assertRaises(ShowNotFound):
-            result = show_single_search('sdfgsdfgsdfg4t4w3dfg')
+            show_single_search('sdfgsdfgsdfg4t4w3dfg')
 
     def test_IDNotFound1_exception(self):
         with self.assertRaises(IDNotFound):
-            result = lookup_tvdb(999999999)
+            lookup_tvdb(999999999)
 
     def test_IDNotFound2_exception(self):
         with self.assertRaises(IDNotFound):
-            result = lookup_tvrage(999999999)
+            lookup_tvrage(999999999)
 
     def test_IDNotFound3_exception(self):
         with self.assertRaises(IDNotFound):
-            result = show_main_info(maze_id=4563456354)
+            show_main_info(maze_id=4563456354)
 
     def test_IDNotFound4_exception(self):
         with self.assertRaises(IDNotFound):
-            result = episode_list(maze_id=4563456354)
+            episode_list(maze_id=4563456354)
 
     def test_ScheduleNotFound1_exception(self):
         with self.assertRaises(ScheduleNotFound):
-            result = get_schedule(country='fdsfgf')
+            get_schedule(country='fdsfgf')
 
     def test_ScheduleNotFound2_exception(self):
         with self.assertRaises(ScheduleNotFound):
-            result = get_schedule(date=(datetime(1900, 1, 1)))
+            get_schedule(date=(datetime(1900, 1, 1)))
 
     def test_EpisodeNotFound_exception(self):
         with self.assertRaises(EpisodeNotFound):
-            result = episode_by_number(maze_id=4563456354, season_number=1, episode_number=2)
+            episode_by_number(maze_id=4563456354, season_number=1, episode_number=2)
 
     def test_NoEpisodesForAirdate_exception(self):
         with self.assertRaises(NoEpisodesForAirdate):
-            result = episodes_by_date(maze_id=4563456354, airdate='2015-01-01')
+            episodes_by_date(maze_id=4563456354, airdate='2015-01-01')
 
     def test_IllegalAirDate_exception(self):
         with self.assertRaises(IllegalAirDate):
-            result = episodes_by_date(maze_id=4563456354, airdate='dfdfdf')
+            episodes_by_date(maze_id=4563456354, airdate='dfdfdf')
 
     def test_CastNotFound_exception(self):
         with self.assertRaises(CastNotFound):
-            result = show_cast(maze_id=4563456354)
+            show_cast(maze_id=4563456354)
 
     def test_PersonNotFound1_exception(self):
         with self.assertRaises(PersonNotFound):
-            result = people_search('345345')
+            people_search('345345')
 
     def test_PersonNotFound2_exception(self):
         with self.assertRaises(PersonNotFound):
-            result = person_main_info(person_id=5634563456)
+            person_main_info(person_id=5634563456)
 
     def test_CreditsNotFound1_exception(self):
         with self.assertRaises(CreditsNotFound):
-            result = person_cast_credits(person_id=5634563456)
+            person_cast_credits(person_id=5634563456)
 
     def test_CreditsNotFound2_exception(self):
         with self.assertRaises(CreditsNotFound):
-            result = person_crew_credits(person_id=5634563456)
+            person_crew_credits(person_id=5634563456)
 
     def test_AKASNotFound_exception(self):
         with self.assertRaises(AKASNotFound):
-            result = show_akas(maze_id=5634563456)
+            show_akas(maze_id=5634563456)
